@@ -1,7 +1,3 @@
-"""
-Database models.
-"""
-
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -42,13 +38,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     passage_id = models.CharField(max_length=255, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
+    cpf = models.CharField(max_length=11, unique=True)
+    phone = models.CharField(max_length=20)
+    address = models.TextField()
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["name", "cpf"]
 
     class Meta:
         """Meta options for the model."""
