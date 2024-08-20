@@ -7,4 +7,4 @@ class Adocao(models.Model):
     observacoes = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return f'Adoção #{self.id} por {self.user}'
+        return f'ID: {self.id} |:| Usuario: {self.user}'
