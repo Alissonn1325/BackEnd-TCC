@@ -1,7 +1,9 @@
 from django.db import models
-from .user import User
-from .situacao import Situacao
+
 from .raca import Raca
+from .situacao import Situacao
+from .user import User
+
 
 class Animal(models.Model):
     nome = models.CharField(max_length=40)
@@ -13,8 +15,7 @@ class Animal(models.Model):
     raca = models.ForeignKey(Raca, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.nome} ({self.sexo}) - {self.status}'
-    
+        return f"{self.nome} ({self.sexo}) - {self.status}"
 
     # SEXO_CHOICES = [
     #     ('Macho', 'Macho'),
@@ -29,4 +30,3 @@ class Animal(models.Model):
 
     # choices=SEXO_CHOICES
     # choices=STATUS_CHOICES
-
