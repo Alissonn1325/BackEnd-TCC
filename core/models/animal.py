@@ -1,4 +1,5 @@
 from django.db import models
+from uploader.models import Image
 
 from .raca import Raca
 from .situacao import Situacao
@@ -13,6 +14,14 @@ class Animal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="animais")
     situacao = models.ForeignKey(Situacao, on_delete=models.SET_NULL, null=True, blank=True)
     raca = models.ForeignKey(Raca, on_delete=models.SET_NULL, null=True, blank=True)
+    foto = models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        default=None,
+    )
 
     def __str__(self):
         return f"{self.nome} ({self.sexo}) - {self.status}"
