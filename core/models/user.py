@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from uploader.models import Image
 
 
 class UserManager(BaseUserManager):
@@ -41,13 +42,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     cpf = models.CharField(max_length=11, unique=True)
     phone = models.CharField(max_length=20)
     address = models.TextField()
+    foto = models.ForeignKey(
+        Image,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        default=None,
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name", "cpf"]
+    REQUIRED_FIELDS = ["name", "cpf", "phone"]
 
     class Meta:
         """Meta options for the model."""

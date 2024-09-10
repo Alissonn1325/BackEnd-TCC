@@ -1,9 +1,8 @@
 from rest_framework.serializers import ModelSerializer, SlugRelatedField
 
+from core.models import Animal
 from uploader.models import Image
 from uploader.serializers import ImageSerializer
-
-from core.models import Animal
 
 
 class AnimalSerializer(ModelSerializer):
@@ -16,8 +15,6 @@ class AnimalSerializer(ModelSerializer):
             slug_field="attachment_key",
             required=False,
             write_only=True,
-    )
-    foto = ImageSerializer(
-        required=False,
-        read_only=True
-    )
+        )
+
+    foto = ImageSerializer(required=False, read_only=True)
