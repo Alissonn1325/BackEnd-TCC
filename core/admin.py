@@ -7,8 +7,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from core import models
+from core.models import Adocao, Animal, Raca, Situacao, User
 
 
+@admin.register(User)
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
 
@@ -16,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ["email", "name"]
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        (_("Personal Info"), {"fields": ("name", "passage_id", "cpf", "favorito", "")}),
+       (_("Personal Info"), {"fields": ("name","foto")}),
         (
             _("Permissions"),
             {
@@ -28,8 +30,6 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_login",)}),
-        (_("Groups"), {"fields": ("groups",)}),
-        (_("User Permissions"), {"fields": ("user_permissions",)}),
     )
     readonly_fields = ["last_login"]
     add_fieldsets = (
@@ -48,11 +48,36 @@ class UserAdmin(BaseUserAdmin):
                 ),
             },
         ),
-    )
+    ) 
 
+@admin.register(Adocao)
+class AdocaoAdmin(admin.ModelAdmin):
+    list_display = ('user', 'data_adocao', 'observacoes')
+    search_fields = ('user', 'data_adocao',)
+    list_filter = ('data_adocao',)
+    ordering = ('user', 'data_adocao', 'observacoes')
+    list_per_page = 10
 
-admin.site.register(models.User, UserAdmin)
-admin.site.register(models.Situacao)
-admin.site.register(models.Raca)
-admin.site.register(models.Adocao)
-admin.site.register(models.Animal)
+@admin.register(Animal)
+class AnimalAdmin(admin.ModelAdmin):
+    list_display = ('foto', 'nome', 'idade', 'sexo', 'status', 'especie', 'situacao', 'raca', 'user')
+    search_fields = ('nome', 'raca__nome')
+    list_filter = ('sexo', 'status', 'especie', 'situacao', 'raca')
+    ordering = ('nome')
+    list_per_page = 10
+
+@admin.register(Raca)
+class RacaAdmin(admin.ModelAdmin):
+    list_display = ('raca',)
+    search_fields = ('raca',)
+    list_filter = ('raca',)
+    ordering = ('raca',)
+    list_per_page = 10
+
+@admin.register(Situacao)
+class SituacaoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'editora', 'categoria')
+    search_fields = ('titulo', 'editora__nome', 'categoria__descricao')
+    list_filter = ('editora', 'categoria')
+    ordering = ('titulo', 'editora', 'categoria')
+    list_per_page = 25
