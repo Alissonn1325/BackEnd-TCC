@@ -1,11 +1,8 @@
 from django.db import models
-
 from uploader.models import Image
-
 from .raca import Raca
 from .situacao import Situacao
 from .user import User
-
 
 class Animal(models.Model):
     class Sexo(models.IntegerChoices):
@@ -22,7 +19,7 @@ class Animal(models.Model):
         GATO = 2, "Gato"
 
     nome = models.CharField(max_length=40)
-    idade = models.IntegerField()
+    idade = models.PositiveIntegerField()  # Mudança para PositiveIntegerField
     sexo = models.IntegerField(choices=Sexo.choices)
     status = models.IntegerField(choices=StatusAnimal.choices)
     especie = models.IntegerField(choices=Especie.choices)
@@ -38,5 +35,10 @@ class Animal(models.Model):
         default=None,
     )
 
+    class Meta:
+        verbose_name = "Animal"
+        verbose_name_plural = "Animais"
+        ordering = ['nome']  # Ordenação padrão pelo nome do animal
+
     def __str__(self):
-        return f"{self.nome} ({self.get_especie_display()}) - {self.get_sexo_display()} - {self.get_status_display()}"
+        return f"{self.nome} ({self.especie}) - {self.sexo()} - {self.status}"
