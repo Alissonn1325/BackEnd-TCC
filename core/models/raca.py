@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Raca(models.Model):
 
     class Meta:

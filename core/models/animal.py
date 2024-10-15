@@ -1,8 +1,11 @@
 from django.db import models
+
 from uploader.models import Image
+
 from .raca import Raca
 from .situacao import Situacao
 from .user import User
+
 
 class Animal(models.Model):
     class Sexo(models.IntegerChoices):
@@ -38,7 +41,7 @@ class Animal(models.Model):
     class Meta:
         verbose_name = "Animal"
         verbose_name_plural = "Animais"
-        ordering = ['nome']  # Ordenação padrão pelo nome do animal
+        ordering = ["nome"]  # Ordenação padrão pelo nome do animal
 
     def __str__(self):
         return f"{self.nome} ({self.especie}) - {self.sexo()} - {self.status}"
