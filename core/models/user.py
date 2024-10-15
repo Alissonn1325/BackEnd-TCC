@@ -37,6 +37,10 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """User model in the system."""
 
+    class UserType(models.IntegerChoices):
+        ADOTANTE = 1, "Adotante"
+        ADMIN = 2, "Administrador"
+
     passage_id = models.CharField(max_length=255, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
