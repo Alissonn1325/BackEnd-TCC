@@ -22,7 +22,7 @@ class Animal(models.Model):
         GATO = 2, "Gato"
 
     nome = models.CharField(max_length=40)
-    idade = models.PositiveIntegerField()  # Mudança para PositiveIntegerField
+    idade = models.PositiveIntegerField()  
     sexo = models.IntegerField(choices=Sexo.choices)
     status = models.IntegerField(choices=StatusAnimal.choices)
     especie = models.IntegerField(choices=Especie.choices)
