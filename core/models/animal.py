@@ -44,4 +44,4 @@ class Animal(models.Model):
         ordering = ["nome"]  # Ordenação padrão pelo nome do animal
 
     def __str__(self):
-        return f"{self.nome} ({self.especie}) - {self.sexo()}"
+        return f"{self.nome} ({self.especie}) - {self.sexo}"

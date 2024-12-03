@@ -7,3 +7,7 @@ class Situacao(models.Model):
 
     def __str__(self):
         return f"ID: ({self.id}) |:| Status: {self.status} |:| Descrição: {self.descricao}"
+
+    class Meta:
+        verbose_name = "Situação"
+        verbose_name_plural = "Situações"
