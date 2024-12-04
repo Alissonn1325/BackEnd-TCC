@@ -1,11 +1,14 @@
+"""
+Database models.
+"""
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
     PermissionsMixin,
 )
 from django.db import models
-
-from uploader.models import Image
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -33,38 +36,45 @@ class UserManager(BaseUserManager):
 
         return user
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     """User model in the system."""
 
-    class UserType(models.IntegerChoices):
-        ADOTANTE = 1, "Adotante"
-        ADMIN = 2, "Administrador"
 
-    passage_id = models.CharField(max_length=255, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
-    cpf = models.CharField(max_length=11, unique=True)
-    phone = models.CharField(max_length=20)
-    address = models.TextField()
-    foto = models.ForeignKey(
-        Image,
-        related_name="+",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        default=None,
+    email = models.EmailField(
+        max_length=255,
+        unique=True,
+        verbose_name=_("email"),
+        help_text=_("Email")
     )
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    name = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name=_("name"),
+        help_text=_("Username")
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name=_("Usuário está ativo"),
+        help_text=_("Indica que este usuário está ativo.")
+    )
+    is_staff = models.BooleanField(
+        default=False,
+        verbose_name=_("Usuário é da equipe"),
+        help_text=_("Indica que este usuário pode acessar o Admin.")
+    )
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["name", "cpf", "phone"]
+    REQUIRED_FIELDS = []
 
     class Meta:
         """Meta options for the model."""
 
         verbose_name = "Usuário"
         verbose_name_plural = "Usuários"
+
+    def __str__(self):
+        """String representation of the user."""
+        return f"{self.name or self.email}"

@@ -41,7 +41,6 @@ class Animal(models.Model):
     class Meta:
         verbose_name = "Animal"
         verbose_name_plural = "Animais"
-        ordering = ["nome"]  # Ordenação padrão pelo nome do animal
-
+        ordering = ["nome"]
     def __str__(self):
         return f"{self.nome} ({self.especie}) - {self.sexo}"
