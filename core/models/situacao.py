@@ -6,7 +6,7 @@ class Situacao(models.Model):
     descricao = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
-        return f"ID: ({self.id}) |:| Status: {self.status} |:| Descrição: {self.descricao}"
+        return f"ID: ({self.id}) Status: {self.status} Descrição: {self.descricao}"
 
     class Meta:
         verbose_name = "Situação"
