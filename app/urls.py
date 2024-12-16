@@ -19,6 +19,7 @@ from core.views import (
     UserViewSet,
 )
 from uploader.router import router as uploader_router
+from core.views import register_user
 
 router = DefaultRouter()
 
@@ -48,6 +49,7 @@ urlpatterns = [
     # API
     path("api/", include(router.urls)),
     path("api/media/", include(uploader_router.urls)),
+    path('api/register/', register_user, name='register_user'),
 ]
 
 urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)

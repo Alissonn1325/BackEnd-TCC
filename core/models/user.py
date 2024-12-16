@@ -16,8 +16,7 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password=None, **extra_fields):
-        """Create, save and return a new user."""
+    def create_user(self, name, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Users must have an email address.")
 
@@ -27,18 +26,21 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password=None, **extra_fields):
         """Create, save and return a new superuser."""
-        user = self.create_user(email, password)
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
-        return user
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(email, password, **extra_fields)
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User model in the system."""
-
 
     email = models.EmailField(
         max_length=255,
@@ -51,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True,
         verbose_name=_("name"),
-        help_text=_("Username")
+        help_text=_("Name")
     )
     is_active = models.BooleanField(
         default=True,
@@ -67,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["name"]
 
     class Meta:
         """Meta options for the model."""
