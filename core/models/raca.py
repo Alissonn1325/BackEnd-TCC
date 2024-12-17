@@ -10,4 +10,4 @@ class Raca(models.Model):
         verbose_name_plural = "Raças"
 
     def __str__(self):
-        return f"ID:{self.id} Raça: {self.raca}"
+        return f"{self.raca}"
