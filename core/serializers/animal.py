@@ -16,5 +16,6 @@ class AnimalSerializer(ModelSerializer):
             required=False,
             write_only=True,
         )
+        depth = 1
 
     foto = ImageSerializer(required=False, read_only=True)

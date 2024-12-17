@@ -4,7 +4,6 @@ from uploader.models import Image
 
 from .raca import Raca
 from .situacao import Situacao
-# from .user import User
 
 
 class Animal(models.Model):
@@ -24,9 +23,7 @@ class Animal(models.Model):
     nome = models.CharField(max_length=40)
     idade = models.PositiveIntegerField()  
     sexo = models.IntegerField(choices=Sexo.choices)
-    # status = models.IntegerField(choices=StatusAnimal.choices)
     especie = models.IntegerField(choices=Especie.choices)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="animais")
     situacao = models.ForeignKey(Situacao, on_delete=models.SET_NULL, null=True, blank=True)
     raca = models.ForeignKey(Raca, on_delete=models.SET_NULL, null=True, blank=True)
     descricao = models.TextField(null=True, blank=True)
