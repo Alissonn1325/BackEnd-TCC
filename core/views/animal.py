@@ -9,4 +9,4 @@ class AnimalViewSet(ModelViewSet):
     queryset = Animal.objects.all()
     serializer_class = AnimalSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["especie"]
+    filterset_fields = ["especie, raca, situacao"]
