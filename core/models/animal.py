@@ -29,6 +29,7 @@ class Animal(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="animais")
     situacao = models.ForeignKey(Situacao, on_delete=models.SET_NULL, null=True, blank=True)
     raca = models.ForeignKey(Raca, on_delete=models.SET_NULL, null=True, blank=True)
+    descricao = models.TextField(null=True, blank=True)
     foto = models.ForeignKey(
         Image,
         related_name="+",
